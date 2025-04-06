@@ -1,5 +1,4 @@
-local OrionLib = loadstring(game:HttpGet(
-                                ('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/jensonhirst/Orion/main/source'))()
 
 local Window = OrionLib:MakeWindow({
     Name = [[<font color="rgb(255,0,0)">Sub 2 Deno</font>]],
@@ -12,6 +11,7 @@ local Tab1 = Window:MakeTab({Name = "Main", Icon = "", PremiumOnly = false})
 local Tab3 = Window:MakeTab({Name = "ESP", Icon = "", PremiumOnly = false})
 local Tab2 = Window:MakeTab({Name = "Character", Icon = "", PremiumOnly = false})
 local Expander = false
+local AimBotEnabled = false  -- Declare AimBotEnabled here
 
 local HB_Settings = {
     Color = Color3.new(1, 0, 0), -- Default to red if not set
@@ -40,7 +40,6 @@ function addHitBoxChanges()
             end
         end
     end
-
     -- Revert changes when Expander is false
     for i, plr in pairs(game.Players:GetPlayers()) do
         if plr ~= Player and plr.Team ~= Player.Team then
@@ -113,12 +112,12 @@ Tab1:AddSection({
 })
 
 Tab1:AddColorpicker({
-	Name = "HitBox Color",
-	Default = Color3.fromRGB(255, 0, 0),
-	Callback = function(Value)
-		HB_Settings.Color = Value
+    Name = "HitBox Color",
+    Default = Color3.fromRGB(255, 0, 0),
+    Callback = function(Value)
+        HB_Settings.Color = Value
         print(Value)
-	end	  
+    end  
 })
 
 Tab1:AddSlider({
@@ -156,7 +155,9 @@ Tab2:AddSlider({
     Increment = 1,
     ValueName = "WalkSpeed",
     Callback = function(Value)
-        Player.Character.Humanoid.WalkSpeed = Value
+        if Player.Character then
+            Player.Character.Humanoid.WalkSpeed = Value
+        end
     end
 })
 
